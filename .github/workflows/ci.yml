@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+
+jobs:
+  php-tests:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php: [7.3, 7.4]
+
+    name: PHP${{ matrix.php }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v1
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v1
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: json
+
+      - name: Install dependencies
+        run: composer update --prefer-dist --no-suggest --no-interaction --ignore-platform-reqs --no-scripts
+
+      - name: Check codestyle
+        run: vendor/bin/ecs check --config=easy-coding-standard.yml --no-progress-bar .
+
+      - name: Execute unit tests
+        run: vendor/bin/phpunit --testdox --colors=always

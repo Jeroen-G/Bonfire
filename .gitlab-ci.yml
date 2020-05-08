@@ -1,0 +1,48 @@
+# ======================
+# CI Stages
+# ======================
+
+stages:
+  - test
+  - mergeback
+
+# ======================
+# Snippets
+# ======================
+
+.prepare-cache: &prepare-cache
+  image: existenz/builder:latest
+  cache:
+    key: vendor-cache
+    paths:
+      - vendor/
+  before_script:
+    - composer install --prefer-dist --no-progress --no-suggest --no-interaction --ignore-platform-reqs --no-scripts
+
+# ======================
+# Testing
+# ======================
+
+php codestyle:
+  stage: test
+  <<: *prepare-cache
+  script:
+    - php -d memory_limit=256M vendor/bin/ecs check --config=easy-coding-standard.yml --no-progress-bar .
+
+unit tests:
+  stage: test
+  <<: *prepare-cache
+  script:
+    - php -d memory_limit=256M vendor/bin/phpunit
+
+# ======================
+# Merge back master
+# ======================
+
+update branches:
+  image: existenz/merge-back:latest
+  stage: mergeback
+  only:
+    - master
+  script:
+    - merge-back
