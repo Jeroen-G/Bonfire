@@ -1,0 +1,7 @@
+# Ignore everything
+*
+
+# Allow files and directories
+
+# Do ignore the resources that will be copied to the public folder
+

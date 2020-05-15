@@ -11,7 +11,7 @@ Boilerplate for new projects.
 
 Replace `<project>` with the name of your project.
 
-` git clone --depth 1 git@gitlab.enrise.com:jgroenendijk/bonfire.git bonfire && cp -a bonfire/. <project> && rm -rf bonfire/`
+`git clone --depth 1 git@github.com:Jeroen-G/Bonfire.git bonfire && cp -a bonfire/. <project> && rm -rf bonfire/`
 
 To be able to run all make commands:
 
