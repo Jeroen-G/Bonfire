@@ -99,10 +99,10 @@ do-lint-staged-files:
 	@node_modules/.bin/lint-staged
 
 do-cs-ecs:
-	./vendor/bin/ecs check --config=dev/easy-coding-standard.yml
+	./vendor/bin/ecs check --config=dev/ecs.php
 
 do-cs-ecs-fix:
-	./vendor/bin/ecs check --fix --config=dev/easy-coding-standard.yml
+	./vendor/bin/ecs check --fix --config=dev/ecs.php
 
 # Docker
 do-docker-build:
@@ -112,18 +112,15 @@ do-docker-build:
 do-clean:
 	@echo "\n=== 🧹 Cleaning up ===\n"
 	@${set-ids} docker-compose --file ops/docker-compose.yml rm -f
-	if [ $$(uname) == Darwin ] ; then docker-sync clean ; fi;
 	@rm -rf src/vendor/*
 	@rm -rf src/node_modules/*
 
 do-docker-start:
 	@echo "\n=== Starting containers ===\n"
-	if [ $$(uname) == Darwin ] ; then docker-sync start ; fi;
 	@${set-ids} docker-compose --file ops/docker-compose.yml up -d --remove-orphans
 
 do-docker-stop:
 	@echo "\n=== Stopping containers ===\n"
-	if [ $$(uname) == Darwin ] ; then docker-sync stop ; fi;
 	@${set-ids} docker-compose --file ops/docker-compose.yml stop
 
 do-docker-logs:
