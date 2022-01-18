@@ -80,7 +80,7 @@ help:
 # Recipes
 # ===========================
 
-set-unix-ids = USERID=$$(id -u) GROUPID=$$(id -g) \
+set-ids = USERID=$$(id -u) GROUPID=$$(id -g) \
 
 # Dependencies
 do-composer-install:
